@@ -1,6 +1,7 @@
 'use strict'
 
 var Producto = require('../models/producto');
+var Inventario = require('../models/inventario');
 var fs = require('fs');
 var path = require('path');
 
@@ -18,7 +19,16 @@ const registro_producto_admin = async function(req, res){
             data.portada = portada_name;
             let reg = await Producto.create(data);
 
-            res.status(200).send({data:reg});
+            let inventario = await Inventario.create({
+                admin: req.user.sub,
+                cantidad: data.stock,
+                proveedor: 'primer registro',
+                producto: reg._id
+
+           
+            });
+
+            res.status(200).send({data:reg, inventario:inventario});
             
     
         }else{
@@ -213,12 +223,65 @@ const actualizar_producto_admin = async function(req, res){
 
     }
 
-module.exports = {
+
+    const eliminar_producto_admin = async function(req, res){
+
+        if(req.user){
+    
+            if(req.user.role == 'admin'){
+    
+                var id = req.params['id'];
+    
+                let reg = await Producto.findByIdAndRemove({_id: id});
+    
+                res.status(200).send({data: reg});
+    
+            
+    
+            }else{
+    
+                res.status(500).send({message: 'NoAccess'});
+            }
+        }else{
+            res.status(500).send({message: 'NoAccess'});
+    
+        }
+    
+    }
+
+
+    const listar_inventario_producto_admin = async function(req, res){
+    
+        if(req.user){
+    
+            if(req.user.role == 'admin'){
+    
+                var id = req.params['id'];
+
+                var reg = await Inventario.find({producto: id})
+                res.status(200).send({data: reg});
+            
+    
+            }else{
+    
+                res.status(500).send({message: 'NoAccess'});
+            }
+        }else{
+            res.status(500).send({message: 'NoAccess'});
+    
+        }
+    
+    
+    }
+
+    module.exports = {
     registro_producto_admin,
     listar_productos_admin,
     obtener_portada,
     obtener_producto_admin,
-    actualizar_producto_admin
+    actualizar_producto_admin,
+    eliminar_producto_admin,
+    listar_inventario_producto_admin
 
 }
 
