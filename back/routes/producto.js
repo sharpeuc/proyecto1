@@ -18,6 +18,7 @@ api.delete('/eliminar_producto_admin/:id', [auth.auth, path], productoController
 
 api.get('/listar_inventario_producto_admin/:id', [auth.auth, path], productoController.listar_inventario_producto_admin);
 api.delete('/eliminar_inventario_producto_admin/:id', [auth.auth, path], productoController.eliminar_inventario_producto_admin);
+api.post('/registro_inventario_producto_admin', [auth.auth, path], productoController.registro_inventario_producto_admin);
 
 
 
