@@ -1,4 +1,4 @@
-'use strict'
+
 
 var Producto = require('../models/producto');
 var Inventario = require('../models/inventario');
