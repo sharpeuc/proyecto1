@@ -1,12 +1,12 @@
-'use strict'
+
 
 var config = require('../models/config');
+const actualiza_config_admin = async function(req, res){
 
-const actualiza_config_admin = async function(req,res){
     if(req.user){
         if(req.user.role == 'admin'){
 
-            await config.create({
+            config.create({
 
                 categorias: [],
                 titulo: 'Createx',
@@ -16,10 +16,7 @@ const actualiza_config_admin = async function(req,res){
 
 
 
-
-            })
-
-
+            });
             
     
         }else{
@@ -34,16 +31,16 @@ const actualiza_config_admin = async function(req,res){
            
 
         }           
+}
+
 
 
 
 module.exports = {
 
-    actualiza_config_admin,
+    actualiza_config_admin
 
-   
-
-
-}
+    
 
 }
+

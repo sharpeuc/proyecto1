@@ -12,6 +12,7 @@ var producto_route = require('./routes/producto');
 var cupon_route = require('./routes/cupon')
 var config_route = require('./routes/config')
 
+
 const cors = require('cors');
 app.use(cors({
     origin: '*'
@@ -46,6 +47,10 @@ app.use('/api', admin_route);
 app.use('/api', producto_route);
 app.use('/api', cupon_route);
 app.use('/api', config_route);
+
+
+
+
 
 
 
